@@ -10,10 +10,7 @@ const routes: Routes = [
     resolve: {
       userData: SeoMetaService
     }
-
   }
-  
-
 ];
 
 @NgModule({

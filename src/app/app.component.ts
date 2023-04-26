@@ -12,8 +12,9 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit() {
-    const {title} = this.route.snapshot.data['userData'];
-    this.title.setTitle(title);
+    
+    const {name = ''} = this.route.snapshot.data?.userData?.personalInfo || {};
+    this.title.setTitle(name);
 
   }
 }

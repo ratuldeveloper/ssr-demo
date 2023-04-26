@@ -52,28 +52,29 @@ export class SeoMetaService implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const META_DATA_KEY = makeStateKey<any>('USER_DATA_key');
-    console.log('*************** Meta data key ************', META_DATA_KEY);
-    console.log(this.transferstate.hasKey(META_DATA_KEY));
     if (this.transferstate.hasKey(META_DATA_KEY)) {
       const userData = this.transferstate.get<any>(META_DATA_KEY, null);
-      console.log('**********user details *****************', userData);
       this.transferstate.remove(META_DATA_KEY);
       return of(userData);
     } else {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
+          Accept: 'application/json',
+          rejectUnauthorized: 'false',
         }),
       };
       return this.http
-        .get('https://jsonplaceholder.typicode.com/todos/1', httpOptions)
+        .get(
+          'https://crewresumes.com:28520/crews/profile/username/annejudson-yager/view',
+          httpOptions
+        )
         .pipe(
           first(),
           tap((userData) => {
             if (isPlatformServer(this.platformId)) {
               this.transferstate.set(META_DATA_KEY, userData);
             }
-            //return userData;
           }),
           catchError(this.handleError)
         );
